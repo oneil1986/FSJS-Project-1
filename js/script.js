@@ -41,7 +41,6 @@ const showPage = (list, page) => {
 
   for (let i = 0; i < list.length; i++) {
     if (i >= startIndex && i < endIndex) {
-      console.log(list[i]);
       list[i].style.display = "";
     }
 
@@ -51,7 +50,7 @@ const showPage = (list, page) => {
   }
 };
 
-console.log(showPage(students, 6));
+showPage(students, 1);
 
 /*** 
    Create the `appendPageLinks function` to generate, append, and add 
@@ -71,19 +70,27 @@ const appendPageLinks = list => {
   const ul = document.createElement("ul");
   div.appendChild(ul);
 
+  const li = document.createElement("li");
+
   for (let i = 0; i < pageCount; i++) {
-    const li = document.createElement("li");
     const link = document.createElement("a");
     link.href = "#";
-    link.textContent = i;
-    li[i].appendChild(link);
+    link.textContent = i + 1;
+    li.appendChild(link);
   }
 
-  link.addEventListener("click", event => {
-    showPage(students);
+  ul.appendChild(li);
+
+  ul.addEventListener("click", event => {
+    if (event.target.tagName === "A") {
+      showPage(students, event.target.textContent);
+
+      for (let i = 0; i < event.target; i++) {
+        console.log("got tap");
+      }
+    }
   });
 
-  for (let i = 0; i < link.length; i++) {}
   //    <div class="pagination">
   //    <ul>
   //      <li>
@@ -104,5 +111,7 @@ const appendPageLinks = list => {
   //    </ul>
   //  </div>
 };
+
+appendPageLinks(students);
 
 // Remember to delete the comments that came with this file, and replace them with your own code comments.
