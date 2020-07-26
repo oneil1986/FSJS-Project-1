@@ -70,6 +70,7 @@ const appendPageLinks = list => {
   const ul = document.createElement("ul");
   div.appendChild(ul);
 
+  //   create the links
   const li = document.createElement("li");
 
   for (let i = 0; i < pageCount; i++) {
@@ -79,37 +80,26 @@ const appendPageLinks = list => {
     li.appendChild(link);
   }
 
-  ul.appendChild(li);
+  //   Add active class to links
+  const firstLink = li.firstElementChild;
+  firstLink.className = "active";
 
-  ul.addEventListener("click", event => {
-    if (event.target.tagName === "A") {
-      showPage(students, event.target.textContent);
+  const allLinks = li.children;
 
-      for (let i = 0; i < event.target; i++) {
-        console.log("got tap");
+  for (let i = 0; i < allLinks.length; i++) {
+    allLinks[i].addEventListener("click", event => {
+      const link = event.target;
+      for (let j = 0; j < allLinks.length; j++) {
+        allLinks[j].className = "";
       }
-    }
-  });
+      if (link) {
+        link.className = "active";
+      }
+      showPage(students, event.target.textContent);
+    });
+  }
 
-  //    <div class="pagination">
-  //    <ul>
-  //      <li>
-  //        <a class="active" href="#">1</a>
-  //      </li>
-  //       <li>
-  //        <a href="#">2</a>
-  //      </li>
-  //       <li>
-  //        <a href="#">3</a>
-  //      </li>
-  //       <li>
-  //        <a href="#">4</a>
-  //      </li>
-  //       <li>
-  //        <a href="#">5</a>
-  //      </li>
-  //    </ul>
-  //  </div>
+  ul.appendChild(li);
 };
 
 appendPageLinks(students);
