@@ -17,23 +17,14 @@ FSJS project 2 - List Filter and Pagination
 ***/
 
 const students = document.getElementsByClassName("student-item");
-// console.log(students);
+
 const itemPerPage = 10;
 
-/*** 
-   Create the `showPage` function to hide all of the items in the 
-   list except for the ten you want to show.
-
-   Pro Tips: 
-     - Keep in mind that with a list of 54 students, the last page 
-       will only display four.
-     - Remember that the first student has an index of 0.
-     - Remember that a function `parameter` goes in the parens when 
-       you initially define the function, and it acts as a variable 
-       or a placeholder to represent the actual function `argument` 
-       that will be passed into the parens later when you call or 
-       "invoke" the function 
-***/
+/**
+ * `showPage` function will hide all of the items in the list except for the ten that needs to be shown.
+ * @param  {Array} list Array of students
+ * @param  {Number} page The page to be displayed
+ **/
 
 const showPage = (list, page) => {
   const startIndex = page * itemPerPage - itemPerPage;
@@ -52,10 +43,10 @@ const showPage = (list, page) => {
 
 showPage(students, 1);
 
-/*** 
-   Create the `appendPageLinks function` to generate, append, and add 
-   functionality to the pagination buttons.
-***/
+/**
+ * `appendPageLinks` function will generate, append, and add functionality to the pagination buttons.
+ * @param  {Array} List Array of students
+ **/
 
 const appendPageLinks = list => {
   const pageCount = list.length / itemPerPage;
@@ -99,9 +90,54 @@ const appendPageLinks = list => {
     });
   }
 
+  //   append the links to the ul
   ul.appendChild(li);
 };
 
 appendPageLinks(students);
 
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
+// Search filed
+const studentSearch = student => {
+  const div = document.createElement("div");
+  const input = document.createElement("input");
+  const button = document.createElement("button");
+  const pageHeader = document.querySelector(".page-header");
+  const h2 = document.querySelector("h2");
+
+  div.className = "student-search";
+  input.placeholder = "Search for students...";
+  button.textContent = "Search";
+
+  div.appendChild(input);
+  div.appendChild(button);
+
+  pageHeader.insertBefore(div, h2);
+
+  input.addEventListener("keyup", e => {
+    const notFound = document.createElement("h2");
+    let searchValue = e.target.value.toLowerCase();
+    notFound.textContent = "No results found";
+
+    for (let i = 0; i < student.length; i++) {
+      const div = student[i];
+      const h3 = div.firstElementChild.textContent;
+      if (h3.toLowerCase().indexOf(searchValue) > -1 && searchValue !== 0) {
+        div.style.display = "";
+      } else {
+        div.style.display = "none";
+      }
+
+      if (h3.toLowerCase().indexOf(searchValue) !== -1) {
+        console.log(searchValue);
+      }
+    }
+  });
+
+  button.addEventListener("click", e => {
+    e.preventDefault();
+
+    console.log("I'm working");
+  });
+};
+
+studentSearch(students);
