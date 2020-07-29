@@ -97,12 +97,12 @@ const appendPageLinks = list => {
 appendPageLinks(students);
 
 // Search filed
-const studentSearch = student => {
+function studentSearch(student) {
   const div = document.createElement("div");
   const input = document.createElement("input");
   const button = document.createElement("button");
   const pageHeader = document.querySelector(".page-header");
-  const h2 = document.querySelector("h2");
+  const ul = document.querySelector(".student-list");
 
   div.className = "student-search";
   input.placeholder = "Search for students...";
@@ -111,7 +111,7 @@ const studentSearch = student => {
   div.appendChild(input);
   div.appendChild(button);
 
-  pageHeader.insertBefore(div, h2);
+  pageHeader.insertBefore(div, pageHeader.firstElementChild);
 
   input.addEventListener("keyup", e => {
     const notFound = document.createElement("h2");
@@ -119,25 +119,47 @@ const studentSearch = student => {
     notFound.textContent = "No results found";
 
     for (let i = 0; i < student.length; i++) {
-      const div = student[i];
-      const h3 = div.firstElementChild.textContent;
-      if (h3.toLowerCase().indexOf(searchValue) > -1 && searchValue !== 0) {
-        div.style.display = "";
-      } else {
-        div.style.display = "none";
+      //  Get the first h3 that match searchValue
+      const studentDiv = student[i].getElementsByTagName("h3")[0];
+      const h3 = studentDiv.textContent;
+
+      // Display only the student of searchValue and hide the rest
+      h3.toLowerCase().indexOf(searchValue) !== -1
+        ? (student[i].style.display = "")
+        : (student[i].style.display = "none");
+
+      //   If the input field is empty call the showPage function
+      if (searchValue.length === 0) {
+        showPage(student, 1);
       }
 
-      if (h3.toLowerCase().indexOf(searchValue) !== -1) {
-        console.log(searchValue);
-      }
     }
   });
 
   button.addEventListener("click", e => {
     e.preventDefault();
+    
+    const notFound = document.createElement("h2");
+    let searchValue = e.target.value.toLowerCase();
+    notFound.textContent = "No results found";
+
+    for (let i = 0; i < student.length; i++) {
+      //  Get the first h3 that match searchValue
+      const studentDiv = student[i].getElementsByTagName("h3")[0];
+      const h3 = studentDiv.textContent;
+
+      // Display only the student of searchValue and hide the rest
+      h3.toLowerCase().indexOf(searchValue) !== -1
+        ? (student[i].style.display = "")
+        : (student[i].style.display = "none");
+
+      //   If the input field is empty call the showPage function
+      if (searchValue.length === 0) {
+        showPage(student, 1);
+      }
 
     console.log("I'm working");
   });
-};
+}
 
 studentSearch(students);
