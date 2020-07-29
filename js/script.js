@@ -132,13 +132,12 @@ function studentSearch(student) {
       if (searchValue.length === 0) {
         showPage(student, 1);
       }
-
     }
   });
 
   button.addEventListener("click", e => {
     e.preventDefault();
-    
+
     const notFound = document.createElement("h2");
     let searchValue = e.target.value.toLowerCase();
     notFound.textContent = "No results found";
@@ -157,8 +156,7 @@ function studentSearch(student) {
       if (searchValue.length === 0) {
         showPage(student, 1);
       }
-
-    console.log("I'm working");
+    }
   });
 }
 
