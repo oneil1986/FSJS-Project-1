@@ -3,21 +3,8 @@ Treehouse Techdegree:
 FSJS project 2 - List Filter and Pagination
 ******************************************/
 
-// Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
-
-/*** 
-   Add your global variables that store the DOM elements you will 
-   need to reference and/or manipulate. 
-   
-   But be mindful of which variables should be global and which 
-   should be locally scoped to one of the two main functions you're 
-   going to create. A good general rule of thumb is if the variable 
-   will only be used inside of a function, then it can be locally 
-   scoped to that function.
-***/
-
+// global variables that store the DOM elements
 const students = document.getElementsByClassName("student-item");
-
 const itemPerPage = 10;
 
 /**
@@ -27,6 +14,7 @@ const itemPerPage = 10;
  **/
 
 const showPage = (list, page) => {
+  // set the start and end index
   const startIndex = page * itemPerPage - itemPerPage;
   const endIndex = page * itemPerPage;
 
@@ -98,15 +86,15 @@ appendPageLinks(students);
 
 // Search filed
 function studentSearch(student) {
-  const div = document.createElement("div");
-  const input = document.createElement("input");
-  const button = document.createElement("button");
+  function createElement(elementName, property, value) {
+    const element = document.createElement(elementName, property, value);
+    element[property] = value;
+    return element;
+  }
+  const div = createElement("div", "className", "student-search");
+  const input = createElement("input", "placeholder", "Search for students...");
+  const button = createElement("button", "textContent", "Search");
   const pageHeader = document.querySelector(".page-header");
-  const ul = document.querySelector(".student-list");
-
-  div.className = "student-search";
-  input.placeholder = "Search for students...";
-  button.textContent = "Search";
 
   div.appendChild(input);
   div.appendChild(button);
@@ -114,9 +102,7 @@ function studentSearch(student) {
   pageHeader.insertBefore(div, pageHeader.firstElementChild);
 
   input.addEventListener("keyup", e => {
-    const notFound = document.createElement("h2");
     let searchValue = e.target.value.toLowerCase();
-    notFound.textContent = "No results found";
 
     for (let i = 0; i < student.length; i++) {
       //  Get the first h3 that match searchValue
@@ -138,9 +124,7 @@ function studentSearch(student) {
   button.addEventListener("click", e => {
     e.preventDefault();
 
-    const notFound = document.createElement("h2");
     let searchValue = e.target.value.toLowerCase();
-    notFound.textContent = "No results found";
 
     for (let i = 0; i < student.length; i++) {
       //  Get the first h3 that match searchValue
